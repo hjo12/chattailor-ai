@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap rescap com desktop">
+
+  <Identity
+    Name="c04789f2-743d-47e7-955c-727c915c91a6"
+    Publisher="CN=hunte"
+    Version="1.0.0.0" />
+
+  <mp:PhoneIdentity PhoneProductId="c04789f2-743d-47e7-955c-727c915c91a6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>ChatTailorAI</DisplayName>
+    <PublisherDisplayName>hunte</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="x-generate"/>
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="$targetnametoken$.exe"
+      EntryPoint="$targetentrypoint$">
+      <uap:VisualElements
+        DisplayName="ChatTailorAI"
+        Description="ChatTailorAI.WinUI"
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      </uap:VisualElements>
+		<Extensions>
+			<!--Specify which CLSID to activate when app notification clicked-->
+			<desktop:Extension Category="windows.toastNotificationActivation">
+				<desktop:ToastNotificationActivation ToastActivatorCLSID="cb7cc799-1a1b-4bac-9013-e4067aa30105" />
+			</desktop:Extension>
+
+			<!--Register COM CLSID LocalServer32 registry key-->
+			<com:Extension Category="windows.comServer">
+				<com:ComServer>
+					<!-- Setting Executable to same as Application.Id above seemed to cause failure with COM Server registration -->
+					<com:ExeServer Executable="ChatTailorAI.WinUI\ChatTailorAI.WinUI.exe" Arguments="----AppNotificationActivated:" DisplayName="App notification activator">
+						<com:Class Id="cb7cc799-1a1b-4bac-9013-e4067aa30105" DisplayName="App notification activator"/>
+					</com:ExeServer>
+				</com:ComServer>
+			</com:Extension>
+		</Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <rescap:Capability Name="runFullTrust" />
+    <DeviceCapability Name="microphone"/>
+  </Capabilities>
+</Package>

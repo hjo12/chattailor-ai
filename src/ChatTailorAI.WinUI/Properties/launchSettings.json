@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ChatTailorAI.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ChatTailorAI.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

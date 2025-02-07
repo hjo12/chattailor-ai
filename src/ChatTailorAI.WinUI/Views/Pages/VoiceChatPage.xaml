@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page
+    x:Class="ChatTailorAI.WinUI.Views.Pages.VoiceChatPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:ChatTailorAI.WinUI.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:ChatTailorAI.WinUI.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:StringToCheckedConverter x:Key="StringToCheckedConverter" />
+    </Page.Resources>
+
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid
+            x:Name="LayoutRoot"
+            Padding="20"
+            RowSpacing="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!--  Title  -->
+                <RowDefinition Height="Auto" />
+                <!--  Status  -->
+                <RowDefinition Height="Auto" />
+                <!--  Platform selection  -->
+                <RowDefinition Height="Auto" />
+                <!--  Connect/Disconnect Buttons  -->
+                <RowDefinition Height="Auto" />
+                <!--  Messages  -->
+                <RowDefinition Height="Auto" />
+                <!--  Audio Messages  -->
+                <RowDefinition Height="Auto" />
+                <!--  Transcript  -->
+                <RowDefinition Height="Auto" />
+                <!--  Send message  -->
+                <RowDefinition Height="Auto" />
+                <!--  Combined Content  -->
+            </Grid.RowDefinitions>
+
+            <!--  Voice Call Title  -->
+            <TextBlock
+                Grid.Row="0"
+                FontSize="24"
+                FontWeight="Bold"
+                Text="Voice Chat" />
+
+            <!--  Status  -->
+            <StackPanel
+                Grid.Row="1"
+                Orientation="Vertical"
+                Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Status:" />
+                <TextBlock Text="{x:Bind ViewModel.ConnectionStatus, Mode=OneWay}" />
+            </StackPanel>
+
+            <!--  Platform Selection  -->
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Vertical"
+                Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Platform:" />
+                <RadioButton Content="Azure" IsChecked="{x:Bind ViewModel.Platform, Mode=TwoWay, Converter={StaticResource StringToCheckedConverter}, ConverterParameter='azure'}" />
+                <RadioButton Content="OpenAI" IsChecked="{x:Bind ViewModel.Platform, Mode=TwoWay, Converter={StaticResource StringToCheckedConverter}, ConverterParameter='openai'}" />
+                <RadioButton Content="Google" IsChecked="{x:Bind ViewModel.Platform, Mode=TwoWay, Converter={StaticResource StringToCheckedConverter}, ConverterParameter='google'}" />
+            </StackPanel>
+
+            <!--  Connect/Disconnect Buttons  -->
+            <StackPanel
+                Grid.Row="3"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Button
+                    Click="ConnectButton_Click"
+                    Content="Connect"
+                    IsEnabled="{x:Bind ViewModel.CanConnect, Mode=OneWay}" />
+                <Button
+                    Click="DisconnectButton_Click"
+                    Content="Disconnect"
+                    IsEnabled="{x:Bind ViewModel.CanDisconnect, Mode=OneWay}" />
+            </StackPanel>
+
+            <!--  Messages Section  -->
+            <StackPanel Grid.Row="4" Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Messages" />
+                <Border
+                    Height="100"
+                    MaxWidth="{Binding ActualWidth, ElementName=LayoutRoot}"
+                    Padding="5"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+                    <ScrollViewer
+                        x:Name="MessagesScrollViewer"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="MessagesItemsControl" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}" />
+                    </ScrollViewer>
+                </Border>
+                <Button Click="CopyMessagesButton_Click" Content="Copy Messages" />
+            </StackPanel>
+
+            <!--  Audio Messages Section  -->
+            <StackPanel Grid.Row="5" Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Audio Messages" />
+                <Border
+                    Height="100"
+                    MaxWidth="{Binding ActualWidth, ElementName=LayoutRoot}"
+                    Padding="5"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+                    <ScrollViewer
+                        x:Name="AudioMessagesScrollViewer"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+                        <ItemsControl x:Name="AudioMessagesItemsControl" ItemsSource="{x:Bind ViewModel.AudioMessages, Mode=OneWay}" />
+                    </ScrollViewer>
+                </Border>
+                <Button Click="CopyAudioMessagesButton_Click" Content="Copy Audio Messages" />
+            </StackPanel>
+
+            <!--  Transcript Section  -->
+            <StackPanel Grid.Row="6" Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Transcript" />
+                <Border
+                    Height="100"
+                    MaxWidth="{Binding ActualWidth, ElementName=LayoutRoot}"
+                    Padding="5"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+                    <ScrollViewer
+                        x:Name="TranscriptScrollViewer"
+                        HorizontalScrollBarVisibility="Auto"
+                        VerticalScrollBarVisibility="Auto">
+                        <TextBlock
+                            x:Name="TranscriptTextBlock"
+                            Text="{x:Bind ViewModel.Transcript, Mode=OneWay}"
+                            TextWrapping="NoWrap" />
+                    </ScrollViewer>
+                </Border>
+                <Button Click="CopyTranscriptButton_Click" Content="Copy Transcript" />
+            </StackPanel>
+
+            <!--  Send Message Section  -->
+            <StackPanel
+                Grid.Row="7"
+                Orientation="Horizontal"
+                Spacing="10">
+                <TextBox
+                    x:Name="MessageTextBox"
+                    Width="200"
+                    PlaceholderText="Type message" />
+                <Button Click="SendMessageButton_Click" Content="Send" />
+            </StackPanel>
+
+            <!--  Combined Content Section  -->
+            <StackPanel Grid.Row="8" Spacing="5">
+                <TextBlock FontWeight="Bold" Text="Combined Content" />
+                <Border
+                    Padding="5"
+                    BorderBrush="Gray"
+                    BorderThickness="1">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <TextBlock x:Name="CombinedTextBlock" TextWrapping="NoWrap" />
+                    </ScrollViewer>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</Page>

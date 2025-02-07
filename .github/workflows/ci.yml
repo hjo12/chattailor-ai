@@ -1,0 +1,44 @@
+name: .NET CI Build
+
+on:
+  push:
+    branches: [ '**' ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Restore NuGet packages for Solution
+      run: dotnet restore ./src/ChatTailorAI.sln
+
+    - name: Restore NuGet packages for WinUI Project
+      run: |
+        msbuild /t:restore ./src/ChatTailorAI.WinUI/ChatTailorAI.WinUI.csproj
+
+    - name: Build .NET8 Class Libraries
+      run: |
+        dotnet build --configuration Release ./src/ChatTailorAI.DataAccess/ChatTailorAI.DataAccess.csproj --no-restore
+        dotnet build --configuration Release ./src/ChatTailorAI.Services/ChatTailorAI.Services.csproj --no-restore
+        dotnet build --configuration Release ./src/ChatTailorAI.Shared/ChatTailorAI.Shared.csproj --no-restore
+
+    - name: Build WinUI Project (Debug)
+      if: github.ref != 'refs/heads/master' && github.ref != 'refs/heads/develop'
+      run: msbuild /p:Configuration=Debug /p:Platform=x86 /p:AppxPackageSigningEnabled=false ./src/ChatTailorAI.WinUI/ChatTailorAI.WinUI.csproj
+              
+    - name: Build WinUI Project (Release)
+      if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+      run: |
+        # In the future if PublishReadyToRun is enabled we must handle runtimes/publish profiles to avoid NETSDK1094 
+        msbuild /p:Configuration=Release /p:Platform=x64 /p:PublishReadyToRun=false ./src/ChatTailorAI.WinUI/ChatTailorAI.WinUI.csproj
