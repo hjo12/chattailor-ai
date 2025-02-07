@@ -1,6 +1,6 @@
 # ChatTailor AI
 
-A C# desktop application using WinUI3 on WinAppSDK with .NET8, used to interact with LLM's such as GPT, Claude, or Gemini for chat interactions and DALL-E for AI image generation. The previous UWP project can be found [here](https://github.com/hjo12/chattailor-ai-uwp) for reference.
+A C# desktop application using WinUI3 on WinAppSDK with .NET8, used to interact with LLM's such as GPT, Claude, or Gemini for chat interactions and DALL-E for AI image generation. The previous UWP project can be found [here](https://github.com/hjo12/chattailor-ai-uwp) for reference, but future updates will only be added to this WinUI project.
 
 [![.NET CI Build](https://github.com/hjo12/chattailor-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/hjo12/chattailor-ai/actions/workflows/ci.yml)
 
