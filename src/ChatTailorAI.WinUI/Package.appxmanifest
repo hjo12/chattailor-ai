@@ -12,7 +12,7 @@
   <Identity
     Name="c04789f2-743d-47e7-955c-727c915c91a6"
     Publisher="CN=hunte"
-    Version="1.0.0.0" />
+    Version="3.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="c04789f2-743d-47e7-955c-727c915c91a6" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

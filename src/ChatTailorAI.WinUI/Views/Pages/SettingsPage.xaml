@@ -1770,7 +1770,7 @@
                                         Margin="12"
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center">
-                                        v2.4.1
+                                        v3.0.0
                                     </TextBlock>
                                 </Grid>
                             </Grid>
@@ -1797,6 +1797,18 @@
                                             </Grid.RowDefinitions>
                                             <Grid Grid.Row="0" HorizontalAlignment="Center">
                                                 <StackPanel Orientation="Vertical">
+                                                    <TextBlock
+                                                        Margin="0,12,0,0"
+                                                        FontWeight="Bold"
+                                                        IsTextSelectionEnabled="True"
+                                                        Text="v3.0.0:"
+                                                        TextDecorations="Underline"
+                                                        TextWrapping="Wrap" />
+                                                    <TextBlock
+                                                        Margin="0,0,0,12"
+                                                        Text="• Application upgrade from UWP to WinUI3"
+                                                        TextWrapping="Wrap" />
+
                                                     <TextBlock
                                                         Margin="0,12,0,0"
                                                         FontWeight="Bold"

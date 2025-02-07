@@ -20,12 +20,12 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock
                         Margin="0,0,0,12"
-                        Text="v2.4.1 ChatTailor AI:"
+                        Text="v3.0.0 ChatTailor AI:"
                         TextDecorations="Underline"
                         TextWrapping="Wrap" />
                     <TextBlock
                         Margin="0,0,0,12"
-                        Text="• General changes, fixes"
+                        Text="• Application upgrade from UWP to WinUI3"
                         TextWrapping="Wrap" />
                 </StackPanel>
             </Grid>
